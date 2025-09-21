@@ -1,3 +1,167 @@
+:root {
+    /* Палитра */
+    --color-bg: #fff;
+    --color-fg: #0b0b0b;
+    --color-muted: #666;
+    --color-primary: #0a84ff;
+    --color-danger: #b00020;
+    /* Типографика и размеры */
+    --font-body: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 16px;
+    --space-4: 24px;
+    --space5: 40px;
+    /* Скругления и тени */
+    --radius: 12px;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .08), 0 8px 24px rgba(0, 0, 0, .08);
+
+    /* Светлые скроллбары/контролы по умолчанию */
+    color-scheme: light;
+}
+
+/* Тёмные — при активной теме */
+/* Тёмная тема: переопределяем только значения токенов */
+body.theme-dark {
+    --color-bg: #2c2c2c;
+    --color-fg: #f5f5f5;
+    --color-muted: #aaa;
+    --color-primary: #6aa2ff;
+    color-scheme: dark;
+    background:
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.02)),
+        url("../assets/fon2.jpg") center/cover fixed no-repeat;
+}
+
+/* БАЗА: читаемость и предсказуемость размеров */
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-body);
+    line-height: 1.5;
+    background:
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.02)),
+        url("../assets/fon1.jpg") center/cover fixed no-repeat;
+}
+
+/* LVHA-порядок для ссылок */
+/* Порядок важен: link → visited → hover → active */
+a:link {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+a:visited {
+    color: var(--color-muted);
+}
+
+a:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+}
+
+a:active {
+    color: var(--color-danger);
+    transform: translateY(1px);
+}
+
+/* Состояния: клавиатура/мышь/ошибки */
+/* Фокус-контуры для доступности */
+/* :where(...) не добавляет специфичности — проще переопределять позже */
+:where(a, button, input, select, textarea):focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Недоступные элементы визуально «приглушаем» */
+:disabled,
+[aria-disabled="true"] {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Плавная прокрутка к якорям */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Подсветка цели якоря */
+:target {
+    outline: 2px dashed var(--color-primary);
+    outline-offset: 4px;
+    border-radius: var(--radius);
+    background-color: rgba(10, 132, 255, 0.1);
+}
+
+/* Центровка и ограничение ширины контейнера */
+.container {
+    width: min(100% - 2*var(--space-4), 1120px);
+    margin-inline: auto;
+}
+
+/* Вертикальные отступы секций по токенам */
+.section {
+    padding-block: var(--space-5);
+}
+
+.section__title {
+    margin: 0 0 var(--space-3);
+}
+
+/* Формы: размеры, отступы, визуальный порядок */
+label {
+    display: block;
+    margin: 0.5rem 0 0.25rem;
+}
+
+/* Форм-контролы наследуют шрифт и цвет */
+input,
+select,
+textarea,
+button {
+    width: 100%;
+    max-width: 480px;
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid #c8c8c8;
+    border-radius: var(--radius);
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font: inherit;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Кнопка по умолчанию */
+button,
+[type="submit"] {
+    background: #0a84ff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    filter: brightness(0.95);
+}
+
+/* Подсветка ошибочных полей (установите aria-invalid="true") */
+[aria-invalid="true"] {
+    border-color: #b00020;
+}
+
 dialog {
     padding: 1.25rem;
     border: none;
@@ -14,66 +178,48 @@ dialog::backdrop {
     margin-top: 1rem;
 }
 
-/* БАЗА: читаемость и предсказуемость размеров */
-* {
-    box-sizing: border-box;
+/* Хорошо: опора на БЭМ-класс компонента */
+.site-nav__link {
+    color: var(--color-fg);
 }
 
-html,
-body {
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-    line-height: 1.5;
-}
-
-/* Формы: размеры, отступы, визуальный порядок */
-label {
+/* Медиа не «выпрыгивают» из контейнеров */
+img,
+video {
+    max-width: 100%;
+    height: auto;
     display: block;
-    margin: 0.5rem 0 0.25rem;
 }
 
-input,
-select,
-textarea,
-button {
+/* Антипаттерн: селектор тяжёлый и хрупкий */
+#header .menu .item a {
+    color: #333;
+}
+
+/* Размер изображений */
+.responsive-image {
+    width: 480px;
+    height: 320px;
+    border-radius: var(--radius);
+    margin: var(--space-4) 0;
+    display: block;
+}
+
+/* Контейнер с фиксированным соотношением сторон для <iframe>/<video> */
+.media {
+    aspect-ratio: 16/9;
+    /* удерживаем пропорцию блока */
+    width: min(100%, 960px);
+    /* не шире 960px, но адаптивен */
+    margin-inline: auto;
+    /* центрируем блок */
+}
+
+.media iframe,
+.media video {
     width: 100%;
-    max-width: 480px;
-    padding: .5rem .75rem;
-    border: 1px solid #c8c8c8;
-    border-radius: 8px;
-    background: #fff;
-}
-
-/* Кнопка по умолчанию */
-button,
-[type="submit"] {
-    background: #0a84ff;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-}
-
-/* Состояния: клавиатура/мышь/ошибки */
-:where(input, select, textarea, button):focus-visible {
-    outline: 2px solid #0a84ff;
-    outline-offset: 2px;
-}
-
-button:hover {
-    filter: brightness(0.95);
-}
-
-:disabled,
-[aria-disabled="true"] {
-    opacity: .6;
-    cursor: not-allowed;
-}
-
-/* Подсветка ошибочных полей (установите aria-invalid="true") */
-[aria-invalid="true"] {
-    border-color: #b00020;
+    height: 100%;
+    /* медиа занимает всю площадь контейнера */
+    border: 0;
+    border-radius: var(--radius);
 }
