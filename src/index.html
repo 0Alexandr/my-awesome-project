@@ -13,16 +13,18 @@
 
 <body>
     <!-- Шапка сайта -->
-    <header>
-        <a href="/">ComputerWorld</a>
-        <!-- Главное меню навигации -->
-        <nav>
-            <ul>
-                <li><a href="index.html">Главная</a></li>
-                <li><a href="about.html">О нас</a></li>
-                <li><a href="contacts.html">Контакты</a></li>
+    <header class="site-header">
+        <a class="site-header__brand" href="/">ComputerWorld</a>
+        <nav class="site-nav" aria-label="Основная навигация">
+            <ul class="site-nav__list">
+                <li class="site-nav__item"><a class="site-nav__link" href="index.html">Главная</a></li>
+                <li class="site-nav__item"><a class="site-nav__link" href="about.html">О нас</a></li>
+                <li class="site-nav__item"><a class="site-nav__link site-nav__link--cta" href="#contacts">Связаться</a>
+                </li>
             </ul>
         </nav>
+
+        <button class="theme-toggle" type="button" aria-pressed="false">Тема</button>
     </header>
 
     <!-- Уникальное основное содержимое страницы -->
@@ -45,6 +47,18 @@
             <p>Примеры наших работ...</p>
         </section>
 
+        <!-- Responsive изображение -->
+        <img src="../assets/1.jpg" alt="Сборка ПК для клиента" width="640" height="360" loading="lazy" decoding="async"
+            class="responsive-image">
+
+        <!-- Вставка с VK Видео; проверьте, разрешён ли embed для ролика -->
+        <div class="media">
+            <iframe src="https://vkvideo.ru/video_ext.php?oid=-141036053&id=456239720&hash=d75dbe202e842620"
+                title="Видео сборки ПК для клиента" allow="autoplay; encrypted-media; picture-in-picture; web-share"
+                allowfullscreen loading="lazy">
+            </iframe>
+        </div>
+
         <!-- Секция 3 с якорем -->
         <section id="contacts">
             <h2>Контактная информация</h2>
@@ -62,7 +76,8 @@
             <label for="email">E-mail</label>
             <input id="email" name="email" type="email" required autocomplete="email">
             <label for="phone">Телефон</label>
-            <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" aria-describedby="phoneHelp" placeholder="+7 (___) ___-__-__" required pattern="^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$">
+            <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" aria-describedby="phoneHelp"
+                placeholder="+7 (___) ___-__-__" required pattern="^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$">
             <small id="phoneHelp">Формат: +7 (900) 000-00-00</small>
             <label for="date">Дата</label>
             <input id="date" name="date" type="date">
